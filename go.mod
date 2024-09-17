@@ -1,4 +1,4 @@
-module github.com/rwxrob/kutil
+module github.com/rwxrob/kt
 
 go 1.22.4
 
