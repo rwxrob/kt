@@ -7,6 +7,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// completion has to be here because needs to see kt.Cmd
+// and would create a circular dependency if in pkg
 var completionCmd = &cobra.Command{
 	Use:       "completion (bash|zsh|fish|pwsh)",
 	Short:     "Generate completion script",
