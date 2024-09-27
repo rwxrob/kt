@@ -1,8 +1,10 @@
 package helm
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"os/exec"
 )
 
@@ -39,4 +41,38 @@ func AppVersionFor(chart, chartver string) (string, error) {
 			fmt.Errorf(`more than one chart has same chart version`)
 	}
 
+}
+
+// ChartVersionFor uses the helm command to lookup all chart versions
+// for which the app_version is the passed argument.
+func ChartVersionsFor(chart, appver string) (string, error) {
+
+	helmout := new(bytes.Buffer)
+	cmd := exec.Command(`helm`, `search`, `repo`, chart, `--versions`, `-o`, `json`)
+	cmd.Stdout = helmout
+	if err := cmd.Run(); err != nil {
+		return "", err
+	}
+
+	type achart struct {
+		Name         string `json:"name"`
+		ChartVersion string `json:"version"`
+		AppVersion   string `json:"app_version"`
+	}
+
+	var charts []achart
+	if err := json.Unmarshal(helmout.Bytes(), &charts); err != nil {
+		return "", err
+	}
+
+	var out string
+	for _, chart := range charts {
+		log.Print(chart)
+
+		if chart.AppVersion == appver {
+			out += chart.ChartVersion + "\n"
+		}
+	}
+
+	return out, nil
 }
