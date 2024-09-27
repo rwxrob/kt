@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"log"
 	"os/exec"
 )
 
@@ -67,8 +66,6 @@ func ChartVersionsFor(chart, appver string) (string, error) {
 
 	var out string
 	for _, chart := range charts {
-		log.Print(chart)
-
 		if chart.AppVersion == appver {
 			out += chart.ChartVersion + "\n"
 		}

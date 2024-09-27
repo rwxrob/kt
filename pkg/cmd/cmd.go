@@ -8,7 +8,7 @@ import (
 var Cmd = &cobra.Command{
 	Use:     `kt`,
 	Short:   `Kubernetes tools`,
-	Version: `v0.0.2`, // TODO change this to something triggered by tag
+	Version: `v0.0.3`, // TODO change this to something triggered by tag
 }
 
 func init() {
