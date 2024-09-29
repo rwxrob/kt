@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"os/exec"
 )
 
@@ -72,4 +73,15 @@ func ChartVersionsFor(chart, appver string) (string, error) {
 	}
 
 	return out, nil
+}
+
+func Flatten(args ...string) error {
+	log.Print(`unimplemented call to Flatten`)
+	return nil
+}
+
+// Detected returns true if helm command is found in executable path.
+func Detected() bool {
+	out, _ := exec.LookPath(`helm`)
+	return len(out) > 0
 }
