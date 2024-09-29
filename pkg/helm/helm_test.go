@@ -2,6 +2,8 @@ package helm_test
 
 import (
 	"fmt"
+	"log"
+	"os"
 
 	"github.com/rwxrob/kt/pkg/helm"
 )
@@ -40,4 +42,32 @@ func ExampleChartVersionsFor() {
 	// 13.2.6
 	// 13.2.4
 	// 13.2.2
+}
+
+func ExampleFlatten() {
+	err := helm.Flatten(`bitnami/harbor`, `2.11.1`, `testdata/flattentest`)
+	if err != nil {
+		fmt.Println(err)
+	}
+	// TODO output something to validate testdata
+	// Output:
+	// something
+}
+
+func ExampleFlatten_impliedPath() {
+	if err := os.Chdir(`testdata/flattentest`); err != nil {
+		log.Fatal(err)
+	}
+	if err := helm.Flatten(`bitnami/harbor`, `2.11.1`); err != nil {
+		fmt.Println(err)
+	}
+	// TODO output something to validate testdata
+	// Output:
+	// something
+}
+
+func ExampleDetected() {
+	fmt.Println(helm.Detected())
+	// Output:
+	// true
 }
